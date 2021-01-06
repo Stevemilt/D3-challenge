@@ -72,7 +72,7 @@ function renderyAxes(newYScale, yAxis) {
 
 // function used for updating circles group with new tooltip
 function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
-    circlesGroup.selectAll("circles")
+    circlesGroup.selectAll("circle")
         .transition()
         .duration(1000)
         .attr("cx", d => newXScale(d[chosenXAxis]))
@@ -116,12 +116,13 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
         ylabel = "Obesity: ";
     }
 
-var toolTip = d3.tip()
-    .attr("class", "tooltip")
-    .offset([80, -60])
-    .html(function(d) {
-        return(`${d.state}<b>${xlabel} ${d[chosenXAxis]}<b>${ylabel} ${d[chosenYaxis]}`);
-    });
+    chosenYAxisVAR = chosenYAxis
+    var toolTip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([80, -60])
+        .html(function(d) {
+            return(`${d.state}<br/> ${chosenXAxis}: ${d[chosenXAxis]} <br/> ${chosenYAxisVAR}: ${d[chosenYAxisVAR]} `);
+        });
 
 circlesGroup.call(toolTip);
 
@@ -195,6 +196,8 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
         .attr("font-weight", "bold")
         .attr("text-anchor", "middle")
         .attr("fill", "white");
+
+circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
 // Create group for three x-axis labels
 
