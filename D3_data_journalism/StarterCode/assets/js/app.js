@@ -121,7 +121,13 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
         .attr("class", "d3-tip")
         .offset([80, -60])
         .html(function(d) {
-            return(`${d.state}<br/> ${chosenXAxis}: ${d[chosenXAxis]} <br/> ${chosenYAxisVAR}: ${d[chosenYAxisVAR]} `);
+            if (chosenXAxis === "poverty") {
+                return(`${d.state}<br/> ${chosenXAxis}: ${d[chosenXAxis]} %<br/> ${chosenYAxisVAR}: ${d[chosenYAxisVAR]}%`);
+            }
+            else {
+                return(`${d.state}<br/> ${chosenXAxis}: ${d[chosenXAxis]} <br/> ${chosenYAxisVAR}: ${d[chosenYAxisVAR]}%`);
+            }
+            
         });
 
 circlesGroup.call(toolTip);
